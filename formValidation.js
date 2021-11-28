@@ -3,7 +3,7 @@ const maxWordLength = 10;
 const minResults = 1;
 const maxResults = 25;
 const forbiddenWords = ["sex", "porn", "violence", "murder"];
-let alertArr = ["","","",""];
+let alertArr = ["","","","",""];
 let alertMsg = "";
 let a = ""; // is not in range
 let b = ""; // has forbidden word
@@ -25,7 +25,7 @@ if (typeof window !== 'undefined') {
                 console.log(alertArr[0]);
                 console.log(numBox.value);
             }
-            if (hasForbiddenWord(searchBox.value)){
+            if (hasForbidenWord(searchBox.value)){
                 alertArr[1] = `*Please enter words other than ${forbiddenWords}`
                 event.preventDefault();
                 console.log(alertArr[1]);
@@ -40,6 +40,12 @@ if (typeof window !== 'undefined') {
             if (hasChar(searchBox.value) === false){
                 alertArr[3] = '*Please enter only text '
                 event.preventDefault();
+                console.log(alertArr[4]);
+                console.log(searchBox.value);
+            }
+            if (notOnlySpace(searchBox.value) === false){
+                alertArr[3] = '*Please enter only text '
+                event.preventDefault();
                 console.log(alertArr[3]);
                 console.log(searchBox.value);
             }
@@ -48,10 +54,10 @@ if (typeof window !== 'undefined') {
                     alertMsg += alertArr[x] + "\r\n";
                 }
             }
-            if (isInRange(numBox.value) === false || hasForbiddenWord(searchBox.value) || hasATooLongWord(searchBox.value) || hasChar(searchBox.value) === false){
+            if (isInRange(numBox.value) === false || hasForbidenWord(searchBox.value) || hasATooLongWord(searchBox.value) || hasChar(searchBox.value) === false || notOnlySpace(searchBox.value) === false) {
                 alert(alertMsg);
             }
-            alertArr = ["","","",""];
+            alertArr = ["","","","",""];
             alertMsg = "";
         }
     }
@@ -89,7 +95,7 @@ function isInRange(text){
     return false;
 }
 //
-function hasForbiddenWord(text) {
+function hasForbidenWord(text) {
     // used RegExp to find a pattern in the text.
     if(/sex/.exec(text)){return true;}
     if(/murder/.exec(text)){return true;}
@@ -110,7 +116,11 @@ function hasATooLongWord(text) {
 //
 function hasChar(text) {
     // if (text === "" || text === undefined || text === " ") {return false;}
-    if (!text.replace(/\s/g, '').length) {return false;}
+    if ( text === "" || text === undefined || text === " ") {return false;}
+    else return true;
+}
+function notOnlySpace(text){
+    if (!text.replace(/\s/g, '').length){return false}
     else return true;
 }
 //
